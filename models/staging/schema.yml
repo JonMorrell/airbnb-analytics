@@ -1,0 +1,48 @@
+version: 2
+
+models:
+  - name: stg_listings
+    description: Cleaned and renamed listings from Inside Airbnb raw source
+    columns:
+      - name: listing_id
+        description: Primary key - unique listing identifier
+        tests:
+          - unique
+          - not_null
+      - name: host_id
+        tests:
+          - not_null
+      - name: price_usd
+        tests:
+          - not_null
+      - name: room_type
+        tests:
+          - accepted_values:
+              values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
+      - name: neighbourhood
+        tests:
+          - not_null
+
+  - name: stg_reviews
+    description: Cleaned guest reviews from Inside Airbnb raw source
+    columns:
+      - name: review_id
+        tests:
+          - unique
+          - not_null
+      - name: listing_id
+        tests:
+          - not_null
+      - name: review_date
+        tests:
+          - not_null
+
+  - name: stg_calendar
+    description: Daily availability and pricing per listing
+    columns:
+      - name: listing_id
+        tests:
+          - not_null
+      - name: calendar_date
+        tests:
+          - not_null

@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: mart_host_performance
+    description: Host-level performance aggregates for ranking and comparison
+    columns:
+      - name: host_id
+        tests:
+          - unique
+          - not_null
+      - name: total_estimated_revenue
+        tests:
+          - not_null
+      - name: host_tier
+        tests:
+          - accepted_values:
+              values: ['Superhost', 'Standard Host']
+
+  - name: mart_neighbourhood_pricing
+    description: Neighbourhood-level pricing and demand aggregates
+    columns:
+      - name: neighbourhood
+        tests:
+          - unique
+          - not_null
+
+  - name: mart_listing_positioning
+    description: Listing-level price positioning vs neighbourhood benchmarks
+    columns:
+      - name: listing_id
+        tests:
+          - unique
+          - not_null
+      - name: price_positioning
+        tests:
+          - accepted_values:
+              values: ['Overpriced', 'Underpriced', 'Fairly Priced']
+      - name: listing_tier
+        tests:
+          - accepted_values:
+              values: ['Premium', 'Overpriced', 'Best Value', 'Budget']
+
+  - name: mart_market_trends
+    description: Monthly market trends using reviews as a demand proxy
+    columns:
+      - name: review_month
+        tests:
+          - unique
+          - not_null
