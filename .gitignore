@@ -1,0 +1,14 @@
+# Data files
+data/raw/
+data/*.duckdb
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
