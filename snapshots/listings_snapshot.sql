@@ -5,7 +5,7 @@
         target_schema='snapshots',
         unique_key='listing_id',
         strategy='check',
-        check_cols=['price_usd', 'room_type', 'bedrooms', git add .gitignore'beds', 'accommodates'],
+        check_cols=['price_usd', 'room_type', 'bedrooms', 'beds', 'accommodates'],
     )
 }}
 
