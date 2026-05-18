@@ -1,0 +1,45 @@
+name: dbt CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install dbt-duckdb
+
+      - name: Create profiles.yml
+        run: |
+          mkdir -p ~/.dbt
+          cat <<EOF > ~/.dbt/profiles.yml
+          airbnb_analytics:
+            target: dev
+            outputs:
+              dev:
+                type: duckdb
+                path: data/airbnb.duckdb
+                schema: dev
+          EOF
+
+      - name: Load raw data
+        run: python load_data.py
+
+      - name: dbt build
+        run: dbt build
+
+      - name: dbt snapshot
+        run: dbt snapshot
