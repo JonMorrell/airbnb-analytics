@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -34,6 +34,16 @@ jobs:
                 path: data/airbnb.duckdb
                 schema: dev
           EOF
+
+      - name: Download raw data
+        run: |
+          mkdir -p data/raw
+          curl -L -o data/raw/listings.csv.gz "https://data.insideairbnb.com/united-kingdom/england/london/2025-09-14/data/listings.csv.gz"
+          curl -L -o data/raw/reviews.csv.gz "https://data.insideairbnb.com/united-kingdom/england/london/2025-09-14/data/reviews.csv.gz"
+          curl -L -o data/raw/calendar.csv.gz "https://data.insideairbnb.com/united-kingdom/england/london/2025-09-14/data/calendar.csv.gz"
+          gunzip data/raw/listings.csv.gz
+          gunzip data/raw/reviews.csv.gz
+          gunzip data/raw/calendar.csv.gz
 
       - name: Load raw data
         run: python load_data.py
