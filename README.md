@@ -199,6 +199,14 @@ DuckDB handles the full London dataset (31M+ rows in calendar alone) comfortably
 **Why Evidence.dev over Tableau or Looker?**
 Evidence.dev produces dashboards from SQL and Markdown, meaning the entire project — including the dashboard — lives in version control. This is the direction modern analytics tooling is heading and demonstrates awareness of the current landscape.
 
+**Why the dashboard isn't hosted publicly**
+The natural deployment target for an Evidence.dev dashboard is Vercel, which Evidence supports natively. However, Vercel requires a live database connection at build time — it cannot access a local DuckDB file. The two production-grade solutions evaluated were:
+
+- **MotherDuck** (cloud-hosted DuckDB) — connected and working locally, but no longer offers a free tier beyond a 7-day trial, making it unsuitable for a long-running portfolio project
+- **Parquet files committed to git** — technically viable but considered bad practice for a code repository, and misrepresents the architecture
+
+The decision was made to prioritise a clean, honest repository over a hosted dashboard. The dashboard runs locally via `npm run dev` and is demonstrated in the project video. In a production context with a cloud warehouse (BigQuery or Snowflake), this would be a non-issue — Evidence connects to those natively and Vercel deployment would be straightforward.
+
 **Why estimated revenue rather than actual revenue?**
 Inside Airbnb does not provide actual booking data. `estimated_annual_revenue` is calculated as `price × (365 - availability_365)`, which is a widely used proxy in Airbnb market analysis. This assumption is documented explicitly in the model.
 
@@ -216,6 +224,6 @@ Inside Airbnb does not provide actual booking data. `estimated_annual_revenue` i
 
 ## Author
 
-Built by [Your Name] as a senior analytics engineering portfolio project.  
-[LinkedIn](https://linkedin.com/in/yourprofile) · [GitHub](https://github.com/yourusername)
+Built by Jon Morrell as an analytics engineering portfolio project.  
+[LinkedIn](https://linkedin.com/in/jondmorrell) · [GitHub](https://github.com/JonMorrell)
 ```
