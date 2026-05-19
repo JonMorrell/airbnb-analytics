@@ -1,0 +1,4 @@
+name: airbnb
+type: duckdb
+options:
+  filename: ../../../data/airbnb.duckdb
