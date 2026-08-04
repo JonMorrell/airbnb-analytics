@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: int_listings_enriched
+    description: >
+      Listings joined with aggregated review activity, plus derived metrics
+      (estimated_annual_revenue, reviews_per_month, host_tenure_days). This is
+      the reusable base for all downstream marts.
+    columns:
+      - name: listing_id
+        description: Primary key - unique listing identifier
+        tests:
+          - unique
+          - not_null
+      - name: host_id
+        tests:
+          - not_null
+      - name: estimated_annual_revenue
+        description: >
+          Proxy metric: price_usd * (365 - availability_365). Actual booking
+          data is unavailable from Inside Airbnb, so this assumes a listing's
+          non-available nights were booked nights.
+
+  - name: int_host_summary
+    description: >
+      int_listings_enriched aggregated to host level (portfolio size, pricing,
+      review scores, estimated revenue). Excludes listings with no recorded
+      price (price_usd = 0 after the staging-layer coalesce) so hosts with
+      unpriced portfolios don't distort revenue and pricing aggregates.
+    columns:
+      - name: host_id
+        description: Primary key - unique host identifier
+        tests:
+          - unique
+          - not_null
+      - name: total_listings
+        tests:
+          - not_null

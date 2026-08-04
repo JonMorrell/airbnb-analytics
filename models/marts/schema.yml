@@ -14,7 +14,8 @@ models:
       - name: host_tier
         tests:
           - accepted_values:
-              values: ['Superhost', 'Standard Host']
+              arguments:
+                values: ['Superhost', 'Standard Host']
 
   - name: mart_neighbourhood_pricing
     description: Neighbourhood-level pricing and demand aggregates
@@ -31,14 +32,30 @@ models:
         tests:
           - unique
           - not_null
+      - name: host_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('mart_host_performance')
+                field: host_id
+      - name: neighbourhood
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('mart_neighbourhood_pricing')
+                field: neighbourhood
       - name: price_positioning
         tests:
           - accepted_values:
-              values: ['Overpriced', 'Underpriced', 'Fairly Priced']
+              arguments:
+                values: ['Overpriced', 'Underpriced', 'Fairly Priced']
       - name: listing_tier
         tests:
           - accepted_values:
-              values: ['Premium', 'Overpriced', 'Best Value', 'Budget']
+              arguments:
+                values: ['Premium', 'Overpriced', 'Best Value', 'Budget']
 
   - name: mart_market_trends
     description: Monthly market trends using reviews as a demand proxy

@@ -34,10 +34,10 @@ enriched as (
         -- estimated revenue proxy
         round(l.price_usd * (365 - l.availability_365), 2) as estimated_annual_revenue,
 
-        -- listing age in days
-        datediff('day', 
-            cast(l.host_since as date), 
-            cast(l.last_scraped as date))           as host_age_days
+        -- host tenure in days (time between host's join date and this scrape)
+        datediff('day',
+            cast(l.host_since as date),
+            cast(l.last_scraped as date))           as host_tenure_days
 
     from listings l
     left join reviews r on l.listing_id = r.listing_id

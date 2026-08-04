@@ -38,7 +38,7 @@ final as (
 
         -- superhost comparison label
         case
-            when is_superhost = 'True' then 'Superhost'
+            when is_superhost then 'Superhost'
             else 'Standard Host'
         end                                                     as host_tier
 

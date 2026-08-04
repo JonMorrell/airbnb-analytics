@@ -18,7 +18,8 @@ models:
       - name: room_type
         tests:
           - accepted_values:
-              values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
+              arguments:
+                values: ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room']
       - name: neighbourhood
         tests:
           - not_null
@@ -33,6 +34,10 @@ models:
       - name: listing_id
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_listings')
+                field: listing_id
       - name: review_date
         tests:
           - not_null
@@ -43,6 +48,10 @@ models:
       - name: listing_id
         tests:
           - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_listings')
+                field: listing_id
       - name: calendar_date
         tests:
           - not_null

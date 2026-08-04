@@ -1,5 +1,9 @@
 with listings as (
+    -- exclude listings with no recorded price (coalesced to 0 in staging) so
+    -- hosts whose entire portfolio is unpriced don't dilute revenue/price
+    -- aggregates or get ranked alongside hosts with real pricing data
     select * from {{ ref('int_listings_enriched') }}
+    where price_usd > 0
 ),
 
 host_summary as (

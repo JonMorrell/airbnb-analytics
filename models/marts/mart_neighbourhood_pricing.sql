@@ -30,7 +30,7 @@ neighbourhood_stats as (
         sum(total_reviews)                                     as total_reviews,
 
         -- host profile
-        round(avg(case when host_is_superhost = 'True' then 1 else 0 end) * 100, 1)
+        round(avg(case when host_is_superhost then 1 else 0 end) * 100, 1)
                                                                as superhost_pct,
 
         -- room type breakdown
